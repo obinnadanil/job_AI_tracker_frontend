@@ -8,13 +8,13 @@ export default function ResumeFeedback() {
     const [resumeText, setResumeText] = useState("");
     const [feedback, setFeedback] = useState([]);
     const [loading, setLoading] = useState(false);
+    const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-    // Handle resume input change
+  
     const handleResumeTextChange = (e) => {
         setResumeText(e.target.value);
     };
 
-    // Fetch resume feedback
     const handleFetchFeedback = async () => {
         if (!resumeText.trim()) {
             toast.error("Please enter your resume text.");
@@ -25,7 +25,7 @@ export default function ResumeFeedback() {
         try {
             const token = localStorage.getItem("token");
             const response = await axios.post(
-                "http://localhost:5000/api/resume/feedback",
+                `${baseUrl}/api/resume/feedback`,
                 { resume_text: resumeText },
                 {
                     headers: { Authorization: `Bearer ${token}` },

@@ -10,13 +10,14 @@ export default function JobList() {
 
   const router = useRouter();
   const { id } = useParams();
+  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
   
 
   useEffect(() => {
     const fetchJobs = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get("http://localhost:5000/api/job", {
+        const res = await axios.get(`${baseUrl}/api/job`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         console.log(res.data);
@@ -37,7 +38,7 @@ export default function JobList() {
 
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(`http://localhost:5000/api/job/${id}`, {
+      await axios.delete(`${baseUrl}/api/job/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setJobs(jobs.filter((job) => job.id !== id));

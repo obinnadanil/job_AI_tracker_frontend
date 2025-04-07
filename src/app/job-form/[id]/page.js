@@ -16,6 +16,7 @@ export default function JobApplicationForm({ job: propJob }) {
   const router = useRouter();
   const { id } = useParams() || {};
   const isUpdating = !!id && !propJob;
+  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 
   useEffect(() => {
@@ -25,7 +26,7 @@ export default function JobApplicationForm({ job: propJob }) {
         try {
           const token = localStorage.getItem("token");
           const response = await axios.get(
-            `http://localhost:5000/api/job/${id}`,
+            `${baseUrl}/api/job/${id}`,
             {
               headers: { Authorization: `Bearer ${token}` },
             }
@@ -82,7 +83,7 @@ export default function JobApplicationForm({ job: propJob }) {
       const token = localStorage.getItem("token");
       if (isUpdating) {
         await axios.patch(
-          `http://localhost:5000/api/job/${id}`,
+          `${baseUrl}/api/job/${id}`,
           {
             status,
             notes,
@@ -93,7 +94,7 @@ export default function JobApplicationForm({ job: propJob }) {
       } else {
 
         await axios.post(
-          "http://localhost:5000/api/job",
+          `${baseUrl}/api/job`,
           {
             job_title: job.job_title,
             company: job.company,

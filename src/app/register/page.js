@@ -1,6 +1,8 @@
+'use client'
 import { useState } from "react";
 import axios from "axios";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -9,6 +11,7 @@ const Register = () => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -16,7 +19,7 @@ const Register = () => {
     setErrorMessage(null);
 
     try {
-      const response = await axios.post("http://localhost:5000/api/user", {
+      const response = await axios.post(`${baseUrl}/api/user`, {
         email,
         password,
         name,
@@ -93,8 +96,8 @@ const Register = () => {
           )}
 
           <div className="flex items-center justify-between mt-4">
-            <Link href="/login">
-              <a className="text-indigo-600 text-sm hover:text-indigo-700">Already have an account? Log In</a>
+            <Link href="/login" className="text-indigo-600 text-sm hover:text-indigo-700">
+             Already have an account? Log In
             </Link>
           </div>
         </form>

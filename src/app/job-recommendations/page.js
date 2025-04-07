@@ -10,6 +10,7 @@ export default function JobRecommendations() {
   const [recommendedJobs, setRecommendedJobs] = useState([]);
   const [selectedJob, setSelectedJob] = useState(null); 
   const [isFormOpen, setFormOpen] = useState(false);
+  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
   const handleSkillsChange = (e) => {
     setSkills(e.target.value);
@@ -24,7 +25,7 @@ export default function JobRecommendations() {
     try {
       const token = localStorage.getItem("token");
       const res = await axios.post(
-        "http://localhost:5000/api/jobs/recommendations",
+        `${baseUrl}/api/jobs/recommendations`,
         { skills },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -72,14 +73,6 @@ export default function JobRecommendations() {
               <h2 className="text-xl font-semibold">{job.job_title}</h2>
               <p className="text-gray-700">{job.company}</p>
               <p className="text-gray-500">{job.location}</p>
-              {/* <a
-                href={job.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-indigo-600 hover:underline mt-2 inline-block"
-              >
-                Apply Now
-              </a> */}
               <button
                 onClick={() => openApplicationForm(job)}
                 className="mt-4 bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700"

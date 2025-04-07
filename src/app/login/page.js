@@ -9,6 +9,7 @@ const Login = () => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -16,7 +17,7 @@ const Login = () => {
     setErrorMessage(null);
 
     try {
-      const response = await axios.post("http://localhost:5000/api/user/login", { email, password });
+      const response = await axios.post(`${baseUrl}/api/user/login`, { email, password });
 
       
       localStorage.setItem("token", response.data.token);
